@@ -84,10 +84,10 @@ ENDNRLINES=`wc -l /tmp/sanitized2$FILENAME|awk '{print $1}'`
 echo "[*] Sanitized file has $ENDNRLINES lines."
 
 echo "[+] Sending to Logstash 3515"
-cat /tmp/sanitized2$FILENAME | nc -v localhost 3515
+cat /tmp/sanitized2$FILENAME | nc -v 127.0.0.1 3515
 
-#echo "[*] Cleaning up /tmp dir"
-#rm /tmp/sanitized*$FILENAME
+echo "[*] Cleaning up /tmp dir"
+rm /tmp/sanitized*$FILENAME
 
 echo "[*] Done with file $1"
 echo ""
