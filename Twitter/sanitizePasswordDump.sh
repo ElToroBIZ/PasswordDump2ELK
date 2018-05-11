@@ -61,7 +61,7 @@ grep -v -E ^\: | \
 # remove empty passwords - find emailaddress folowd by :$
 grep -v -E "\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b\:$"  | \
 # remove long lines
-grep -v '.\{60\}' | \
+grep -v '.\{60\}' > /tmp/sanitized$FILENAME
 # remove Russion addresses
 # grep -v -i ".ru" > /tmp/sanitized$FILENAME
 
@@ -83,7 +83,7 @@ awk -v d="$DUMPNAME" -F":" '{if ($2=="")print d,$1,":"$3, split($1,a,"@")  " " a
 ENDNRLINES=`wc -l /tmp/sanitized2$FILENAME|awk '{print $1}'`
 echo "[*] Sanitized file has $ENDNRLINES lines."
 
-echo "[+] Sending to Logstash 3515"
+echo "[+] Sending to Logstash"
 cat /tmp/sanitized2$FILENAME | nc -v 127.0.0.1 3515
 
 echo "[*] Cleaning up /tmp dir"
